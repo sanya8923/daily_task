@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
 from pymongo.results import InsertOneResult
+from typing import Any, List, Dict
 
 
 load_dotenv()
@@ -20,8 +21,8 @@ class MongoDb(Db):
     def insert_one(self, data: dict) -> InsertOneResult:
         return self.collection.insert_one(data)
 
-    def insert_many(self):
-        pass
+    def insert_many(self, data: List[Dict[str, Any]]):
+        self.collection.insert_many(data)
 
     def find_one(self):
         pass
