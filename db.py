@@ -43,6 +43,3 @@ class MongoDb(Db):
 
     def delete_one(self, fltr: Dict[str, Any]) -> Optional[DeleteResult]:
         return self.collection.delete_one(fltr)
-
-    def delete_many(self):
-        pass
