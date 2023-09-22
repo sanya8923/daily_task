@@ -1,9 +1,12 @@
 from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
+from pymongo.results import InsertOneResult
+
 
 load_dotenv()
 var_name = os.getenv('MONGO')
+cluster = MongoClient(var_name)
 
 
 class Db:
@@ -11,10 +14,11 @@ class Db:
 
 
 class MongoDb(Db):
-    db = MongoClient(var_name)
+    db = cluster['daily_task']
+    collection = db['tasks']
 
-    def insert_one(self):
-        pass
+    def insert_one(self, data: dict) -> InsertOneResult:
+        return self.collection.insert_one(data)
 
     def insert_many(self):
         pass
