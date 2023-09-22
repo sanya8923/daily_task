@@ -18,7 +18,7 @@ class MongoDb(Db):
     db = cluster['daily_task']
     collection = db['tasks']
 
-    def insert_one(self, data: dict) -> InsertOneResult:
+    def insert_one(self, data: dict, *args, **kwargs) -> InsertOneResult:
         return self.collection.insert_one(data)
 
     def insert_many(self, data: List[Dict[str, Any]], *args, **kwargs):
