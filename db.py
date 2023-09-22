@@ -41,8 +41,6 @@ class MongoDb(Db):
     def update_one(self, fltr: Dict[str, Any], update: Dict[str, Any]) -> Optional[UpdateResult]:
         return self.collection.update_one(fltr, update)
 
-    def update_many(self):
-        pass
 
     def delete_one(self):
         pass
