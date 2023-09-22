@@ -15,3 +15,7 @@ class Base(BaseModel):
             return cls(**serialized_data)
         except ValidationError as e:
             print(e)
+
+
+class Task(Base):
+    pass
