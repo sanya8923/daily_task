@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
 from pymongo.results import InsertOneResult
-from typing import Any, List, Dict
+from typing import Any, List, Dict, Optional
 
 
 load_dotenv()
@@ -27,8 +27,19 @@ class MongoDb(Db):
     def find_one(self, fltr: Dict[str, Any], *args, **kwargs) -> 'Model':
         return self.collection.find_one(fltr)
 
-    def find_many(self):
-        pass
+    def find_many(self, *args, **kwargs) -> Optional[List['Model']]:
+        result = []
+        cursor = self.collection.find(*args, **kwargs)
+
+        try:
+            result = [doc for doc in cursor]
+        except Exception as e:
+            print(e)
+
+        if len(result) > 0:
+            return result
+        else:
+            return None
 
     def update_one(self):
         pass
