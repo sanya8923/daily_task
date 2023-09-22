@@ -9,3 +9,7 @@ var_name = os.getenv('MONGO')
 class Db:
     pass
 
+
+class MongoDb(Db):
+    db = MongoClient(var_name)
+
