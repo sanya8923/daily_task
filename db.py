@@ -21,9 +21,6 @@ class MongoDb(Db):
     def insert_one(self, data: dict, *args, **kwargs) -> InsertOneResult:
         return self.collection.insert_one(data)
 
-    def insert_many(self, data: List[Dict[str, Any]], *args, **kwargs):
-        self.collection.insert_many(data)
-
     def find_one(self, fltr: Dict[str, Any], *args, **kwargs) -> Optional['Model']:
         return self.collection.find_one(fltr)
 
