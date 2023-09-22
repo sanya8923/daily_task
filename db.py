@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
-from pymongo.results import InsertOneResult
+from pymongo.results import InsertOneResult, UpdateResult
 from typing import Any, List, Dict, Optional
 
 
@@ -41,8 +41,8 @@ class MongoDb(Db):
         else:
             return None
 
-    def update_one(self):
-        pass
+    def update_one(self, fltr: Dict[str, Any], update: Dict[str, Any]) -> Optional[UpdateResult]:
+        return self.collection.update_one(fltr, update)
 
     def update_many(self):
         pass
