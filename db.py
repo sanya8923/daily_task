@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import os
 from pymongo import MongoClient
-from pymongo.results import InsertOneResult, UpdateResult
+from pymongo.results import InsertOneResult, UpdateResult, DeleteResult
 from typing import Any, List, Dict, Optional
 
 
@@ -41,9 +41,8 @@ class MongoDb(Db):
     def update_one(self, fltr: Dict[str, Any], update: Dict[str, Any]) -> Optional[UpdateResult]:
         return self.collection.update_one(fltr, update)
 
-
-    def delete_one(self):
-        pass
+    def delete_one(self, fltr: Dict[str, Any]) -> Optional[DeleteResult]:
+        return self.collection.delete_one(fltr)
 
     def delete_many(self):
         pass
