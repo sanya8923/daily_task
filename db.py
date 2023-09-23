@@ -3,6 +3,7 @@ import os
 from pymongo import MongoClient
 from pymongo.results import InsertOneResult, UpdateResult, DeleteResult
 from typing import Any, List, Dict, Optional
+from logger import print, log_function
 
 
 load_dotenv()
@@ -25,6 +26,7 @@ class MongoDb(Db):
     db = cluster['daily_task']
     collection = db['tasks']
 
+    @log_function
     def insert_one(self, data: dict, *args, **kwargs) -> InsertOneResult:
         """
         Inserts a single document into the collection.
@@ -34,6 +36,7 @@ class MongoDb(Db):
         """
         return self.collection.insert_one(data)
 
+    @log_function
     def find_one(self, fltr: Dict[str, Any], *args, **kwargs) -> Optional['Model']:
         """
         Finds a single document in the collection.
@@ -43,6 +46,7 @@ class MongoDb(Db):
         """
         return self.collection.find_one(fltr)
 
+    @log_function
     def find_many(self, *args, **kwargs) -> Optional[List['Model']]:
         """
         Finds multiple documents in the collection.
@@ -62,6 +66,7 @@ class MongoDb(Db):
         else:
             return None
 
+    @log_function
     def update_one(self, fltr: Dict[str, Any], update: Dict[str, Any], *args, **kwargs) -> Optional[UpdateResult]:
         """
         Updates a single document in the collection.
@@ -72,6 +77,7 @@ class MongoDb(Db):
         """
         return self.collection.update_one(fltr, update)
 
+    @log_function
     def delete_one(self, fltr: Dict[str, Any], *args, **kwargs) -> Optional[DeleteResult]:
         """
         Deletes a single document from the collection.
