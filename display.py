@@ -1,4 +1,4 @@
-from tkinter import Tk, Frame, Label, Button
+from tkinter import Tk, Frame, Label, Button, Entry, Listbox, ttk
 from abc import ABC, abstractmethod
 
 NAME_APP = 'Daily Tasks'
@@ -19,27 +19,32 @@ class MainDisplay(Display):
         self.name_app = NAME_APP
 
     def main_frame(self):
-        frame = Frame(self.app)
-        frame.pack(padx=100, pady=200)
-        self.title()
-        self.entry()
-        self.tasks_list()
-        self.menu()
+        frame = Frame(self.app, background='#242424')
+        frame.pack(expand=True, fill='both')
+        self.title(frame)
+        self.entry(frame)
+        self.tasks_list(frame)
+        self.menu(frame)
 
         self.app.mainloop()
 
-    def title(self):
-        label = Label(self.app, text="Это метка внутри Frame", background='blue')
-        label.pack()
+    def title(self, frame):
+        label = Label(frame, text=self.name_app, padx=300, pady=200, font=('arial', 50), background='#242424')
+        label.pack(side='top')
 
-    def entry(self):
-        pass
+    def entry(self, frame):
+        entry = Entry(frame)
+        entry.pack()
 
-    def tasks_list(self):
-        pass
+    def tasks_list(self, frame):
+        list_box = Listbox(frame)
+        list_box.insert(0, 'First')
+        list_box.pack()
 
-    def menu(self):
-        button = Button(self.main_frame(), text="Это кнопка внутри Frame")
+    def menu(self, frame):
+        button = Button(frame, text="Это кнопка внутри Frame", bg='#1f69a4', activebackground='#1f69a4')
         button.pack()
 
-
+        # style = ttk.Style()
+        # style.configure('Custom.TButton', background='default')
+        # print(style.theme_names())
