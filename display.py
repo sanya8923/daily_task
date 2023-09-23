@@ -12,14 +12,20 @@ class Display(ABC):
     def main_frame(self):
         pass
 
-    @abstractmethod
+
+class MainDisplay(Display):
+    def __init__(self):
+        super().__init__()
+        self.name_app = NAME_APP
+
+    def main_frame(self):
+        pass
+
     def entry(self):
         pass
 
-    @abstractmethod
     def tasks_list(self):
         pass
 
-    @abstractmethod
     def menu(self):
         pass
