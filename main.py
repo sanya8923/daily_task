@@ -1,7 +1,9 @@
+from display import MainDisplay
 
 
 def main():
-    pass
+    app = MainDisplay()
+    app.main_frame()
 
 
 if __name__ == '__main__':
