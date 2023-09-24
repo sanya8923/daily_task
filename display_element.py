@@ -72,7 +72,7 @@ class Menu(DisplayElement):
                             text=BUTTON_ADD,
                             background=BACKGROUND,
                             activebackground=ACTIVE_BACKGROUND_BUTTON,
-                            command=self.add_task())
+                            command=self.add_task)
         button_add.grid(row=3,
                         column=0,
                         sticky='nsew',
@@ -82,7 +82,7 @@ class Menu(DisplayElement):
                              text=BUTTON_EDIT,
                              background=BACKGROUND,
                              activebackground=ACTIVE_BACKGROUND_BUTTON,
-                             command=self.edit_task())
+                             command=self.edit_task)
         button_edit.grid(row=4,
                          column=0,
                          sticky='nsew',
@@ -91,19 +91,19 @@ class Menu(DisplayElement):
         button_delete = Button(frame,
                                text=BUTTON_DELETE,
                                background=BACKGROUND,
-                               activebackground=ACTIVE_BACKGROUND_BUTTON, command=self.delete_task())
+                               activebackground=ACTIVE_BACKGROUND_BUTTON, command=self.delete_task)
         button_delete.grid(row=5,
                            column=0,
                            sticky='nsew',
                            padx=50)
 
-    def add_task(self) -> str:
+    def add_task(self):
         pass
 
-    def edit_task(self) -> str:
+    def edit_task(self):
         pass
 
-    def delete_task(self) -> str:
+    def delete_task(self):
         pass
 
 
