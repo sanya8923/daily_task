@@ -7,7 +7,6 @@ BUTTON_EDIT = 'Edit'
 BUTTON_DELETE = 'Delete'
 
 
-
 class Display(ABC):
     def __init__(self):
         self.app = Tk()
@@ -26,7 +25,8 @@ class MainDisplay(Display):
         self.app.title(NAME_APP)
         frame = Frame(self.app, background='#242424')
         frame.pack(expand=True)
-        self.title(frame)
+
+        self.header(frame)
         self.entry(frame)
         self.tasks_list(frame)
         self.menu(frame)
@@ -60,8 +60,10 @@ class MainDisplay(Display):
     def menu(self, frame):
         button_add = Button(frame, text=BUTTON_ADD, bg='#242424', activebackground='#1f69a4')
         button_add.grid(row=3, column=0, sticky='nsew', padx=50)
+
         button_edit = Button(frame, text=BUTTON_EDIT, bg='#242424', activebackground='#1f69a4')
         button_edit.grid(row=4, column=0, sticky='nsew', padx=50)
+
         button_delete = Button(frame, text=BUTTON_DELETE, bg='#242424', activebackground='#1f69a4')
         button_delete.grid(row=5, column=0, sticky='nsew', padx=50)
 
