@@ -37,4 +37,4 @@ class Base(BaseModel):
 
 
 class Task(Base):
-    pass
+    task: str = ''
