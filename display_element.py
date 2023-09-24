@@ -152,9 +152,11 @@ class Menu(DisplayElement):
 
     def add_task(self):
         task_text = self.entry_task.get_text()
+
         task_model = Task(task=task_text)
         serialized_data = task_model.serialize()
-        print(self.db_manager.load_one(serialized_data))
+        self.db_manager.load_one(serialized_data)
+
         self.task_list.add_task(task_text)
 
     def edit_task(self):
@@ -162,9 +164,13 @@ class Menu(DisplayElement):
 
         if task is not None:
             new_task = self.entry_task.get_task()
+
+            task_model = Task(task=new_task)
+            serialized_data = task_model.serialize()
             fltr = {'task': task}
-            update = {'$set': {'task': new_task}}
-            print(self.db_manager.update_one(fltr, update))
+            update = {'$set': serialized_data}
+            self.db_manager.update_one(fltr, update)
+
             self.task_list.update_task(index, new_task)
 
     def delete_task(self):
