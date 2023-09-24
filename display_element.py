@@ -165,11 +165,14 @@ class Menu(DisplayElement):
         if task is not None:
             new_task = self.entry_task.get_task()
 
-            task_model = Task(task=new_task)
-            serialized_data = task_model.serialize()
-            fltr = {'task': task}
+            new_task_model = Task(task=new_task)
+            serialized_data = new_task_model.serialize()
+
+            fltr = Task(task=task)
+            serialized_fltr = fltr.serialize()
+
             update = {'$set': serialized_data}
-            self.db_manager.update_one(fltr, update)
+            self.db_manager.update_one(serialized_fltr, update)
 
             self.task_list.update_task(index, new_task)
 
