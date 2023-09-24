@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from tkinter import Label
+from tkinter import Label, Entry, Listbox, Button,
 
 
 NAME_APP = 'Daily Tasks'
@@ -20,9 +20,10 @@ class Header(DisplayElement):
         label.grid(row=0, column=0, sticky='nsew')
 
 
-class Entry(DisplayElement):
+class EntryTask(DisplayElement):
     def add_element(self, frame):
-        pass
+        entry = Entry(frame)
+        entry.grid(row=1, column=0, sticky='nsew', padx=50)
 
 
 class TasksList(DisplayElement):
