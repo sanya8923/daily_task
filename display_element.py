@@ -52,6 +52,9 @@ class EntryTask(DisplayElement):
         except Exception as e:
             print(e)
 
+    def get_task(self):
+        return self.entry.get()
+
 
 class TasksList(DisplayElement):
     def __init__(self):
@@ -78,6 +81,17 @@ class TasksList(DisplayElement):
 
     def add_task(self, task_text: str):
         self.list_box.insert(END, task_text)
+
+    def get_selected_task(self):
+        selected_index = self.list_box.curselection()
+
+        if selected_index:
+            return self.list_box.get(selected_index[0]), selected_index[0]
+        return None, None
+
+    def update_task(self, index, new_task):
+        self.list_box.delete(index)
+        self.list_box.insert(index, new_task)
 
     def delete_selected_task(self):
         selected_indexes = self.list_box.curselection()
@@ -127,7 +141,11 @@ class Menu(DisplayElement):
         self.task_list.add_task(task_text)
 
     def edit_task(self):
-        pass
+        task, index = self.task_list.get_selected_task()
+
+        if task is not None:
+            new_task = self.entry_task.get_task()
+            self.task_list.update_task(index, new_task)
 
     def delete_task(self):
         self.task_list.delete_selected_task()
