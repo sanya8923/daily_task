@@ -1,11 +1,18 @@
 from abc import ABC, abstractmethod
-from tkinter import Label, Entry, Listbox, Button, Frame, Scrollbar
+from tkinter import (Label,
+                     Entry,
+                     Listbox,
+                     Button,
+                     Frame,
+                     Scrollbar)
 
 
 NAME_APP = 'Daily Tasks'
 BUTTON_ADD = 'Add'
 BUTTON_EDIT = 'Edit'
 BUTTON_DELETE = 'Delete'
+BACKGROUND = '#242424'
+ACTIVE_BACKGROUND_BUTTON = '#1f69a4'
 
 
 class DisplayElement(ABC):
@@ -16,26 +23,42 @@ class DisplayElement(ABC):
 
 class Header(DisplayElement):
     def add(self, frame):
-        label = Label(frame, text=NAME_APP, padx=300, pady=50, font=('arial', 50), background='#242424')
-        label.grid(row=0, column=0, sticky='nsew')
+        label = Label(frame,
+                      text=NAME_APP,
+                      padx=300,
+                      pady=50,
+                      font=('arial', 50),
+                      background=BACKGROUND)
+        label.grid(row=0,
+                   column=0,
+                   sticky='nsew')
 
 
 class EntryTask(DisplayElement):
     def add(self, frame):
         entry = Entry(frame)
-        entry.grid(row=1, column=0, sticky='nsew', padx=50)
+        entry.grid(row=1,
+                   column=0,
+                   sticky='nsew',
+                   padx=50)
 
 
 class TasksList(DisplayElement):
     def add(self, frame):
         container = Frame(frame)
-        container.grid(row=2, column=0, sticky='nsew', padx=50)
+        container.grid(row=2,
+                       column=0,
+                       sticky='nsew',
+                       padx=50)
 
         scrollbar = Scrollbar(container)
         list_box = Listbox(container, yscrollcommand=scrollbar.set)
 
-        list_box.pack(side='left', fill='both', expand=True)
-        scrollbar.pack(side='right', fill='y')
+        list_box.pack(side='left',
+                      fill='both',
+                      expand=True)
+        scrollbar.pack(side='right',
+                       fill='y')
 
         scrollbar.config(command=list_box.yview)
 
@@ -45,14 +68,32 @@ class TasksList(DisplayElement):
 
 class Menu(DisplayElement):
     def add(self, frame):
-        button_add = Button(frame, text=BUTTON_ADD, bg='#242424', activebackground='#1f69a4')
-        button_add.grid(row=3, column=0, sticky='nsew', padx=50)
+        button_add = Button(frame,
+                            text=BUTTON_ADD,
+                            background=BACKGROUND,
+                            activebackground=ACTIVE_BACKGROUND_BUTTON)
+        button_add.grid(row=3,
+                        column=0,
+                        sticky='nsew',
+                        padx=50)
 
-        button_edit = Button(frame, text=BUTTON_EDIT, bg='#242424', activebackground='#1f69a4')
-        button_edit.grid(row=4, column=0, sticky='nsew', padx=50)
+        button_edit = Button(frame,
+                             text=BUTTON_EDIT,
+                             background=BACKGROUND,
+                             activebackground=ACTIVE_BACKGROUND_BUTTON)
+        button_edit.grid(row=4,
+                         column=0,
+                         sticky='nsew',
+                         padx=50)
 
-        button_delete = Button(frame, text=BUTTON_DELETE, bg='#242424', activebackground='#1f69a4')
-        button_delete.grid(row=5, column=0, sticky='nsew', padx=50)
+        button_delete = Button(frame,
+                               text=BUTTON_DELETE,
+                               background=BACKGROUND,
+                               activebackground=ACTIVE_BACKGROUND_BUTTON)
+        button_delete.grid(row=5,
+                           column=0,
+                           sticky='nsew',
+                           padx=50)
 
     def add_task(self):
         pass
@@ -66,6 +107,11 @@ class Menu(DisplayElement):
 
 class Footer(DisplayElement):
     def add(self, frame):
-        label = Label(frame, pady=20, background='#242424')
-        label.grid(row=6, column=0, sticky='nsew', padx=20)
+        label = Label(frame,
+                      pady=20,
+                      background=BACKGROUND)
+        label.grid(row=6,
+                   column=0,
+                   sticky='nsew',
+                   padx=20)
 

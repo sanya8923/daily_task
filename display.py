@@ -3,9 +3,7 @@ from display_element import DisplayElement, Header, EntryTask, TasksList, Menu, 
 from abc import ABC, abstractmethod
 
 NAME_APP = 'Daily Tasks'
-BUTTON_ADD = 'Add'
-BUTTON_EDIT = 'Edit'
-BUTTON_DELETE = 'Delete'
+BACKGROUND = '#242424'
 
 
 class Display(ABC):
@@ -24,7 +22,7 @@ class MainDisplay(Display):
 
     def make(self):
         self.app.title(NAME_APP)
-        frame = Frame(self.app, background='#242424')
+        frame = Frame(self.app, background=BACKGROUND)
         frame.pack(expand=True)
 
         header = Header()
