@@ -1,4 +1,4 @@
-from tkinter import Tk, Frame, Label, Button, Entry, Listbox, Scrollbar
+from tkinter import Tk, Frame
 from display_element import DisplayElement, Header, EntryTask, TasksList, Menu, Footer
 from abc import ABC, abstractmethod
 
