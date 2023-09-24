@@ -4,7 +4,8 @@ from tkinter import (Label,
                      Listbox,
                      Button,
                      Frame,
-                     Scrollbar)
+                     Scrollbar,
+                     END)
 from typing import Optional
 
 NAME_APP = 'Daily Tasks'
@@ -53,6 +54,9 @@ class EntryTask(DisplayElement):
 
 
 class TasksList(DisplayElement):
+    def __init__(self):
+        self.list_box = Optional[Listbox]
+
     def add(self, frame):
         container = Frame(frame)
         container.grid(row=2,
@@ -61,22 +65,26 @@ class TasksList(DisplayElement):
                        padx=50)
 
         scrollbar = Scrollbar(container)
-        list_box = Listbox(container,
-                           yscrollcommand=scrollbar.set)
+        self.list_box = Listbox(container,
+                                yscrollcommand=scrollbar.set)
 
-        list_box.pack(side='left',
-                      fill='both',
-                      expand=True)
+        self.list_box.pack(side='left',
+                           fill='both',
+                           expand=True)
         scrollbar.pack(side='right',
                        fill='y')
 
-        scrollbar.config(command=list_box.yview)
+        scrollbar.config(command=self.list_box.yview)
 
-        for i in range(24):
-            list_box.insert(i, f'Task {i}')
+    def add_task(self, task_text: str):
+        self.list_box.insert(END, task_text)
 
 
 class Menu(DisplayElement):
+    def __init__(self, entry_task: EntryTask, task_list: TasksList):
+        self.entry_task: EntryTask = entry_task
+        self.task_list: TasksList = task_list
+
     def add(self, frame):
         button_add = Button(frame,
                             text=BUTTON_ADD,
@@ -109,7 +117,8 @@ class Menu(DisplayElement):
                            padx=50)
 
     def add_task(self):
-        pass
+        task_text = self.entry_task.get_text()
+        self.task_list.add_task(task_text)
 
     def edit_task(self):
         pass
