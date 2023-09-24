@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from tkinter import Label, Entry, Listbox, Button,
+from tkinter import Label, Entry, Listbox, Button, Frame, Scrollbar
 
 
 NAME_APP = 'Daily Tasks'
@@ -28,7 +28,19 @@ class EntryTask(DisplayElement):
 
 class TasksList(DisplayElement):
     def add_element(self, frame):
-        pass
+        container = Frame(frame)
+        container.grid(row=2, column=0, sticky='nsew', padx=50)
+
+        scrollbar = Scrollbar(container)
+        list_box = Listbox(container, yscrollcommand=scrollbar.set)
+
+        list_box.pack(side='left', fill='both', expand=True)
+        scrollbar.pack(side='right', fill='y')
+
+        scrollbar.config(command=list_box.yview)
+
+        for i in range(24):
+            list_box.insert(i, f'Task {i}')
 
 
 class Menu(DisplayElement):
