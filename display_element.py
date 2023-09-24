@@ -79,6 +79,12 @@ class TasksList(DisplayElement):
     def add_task(self, task_text: str):
         self.list_box.insert(END, task_text)
 
+    def delete_selected_task(self):
+        selected_indexes = self.list_box.curselection()
+
+        for index in selected_indexes[::1]:
+            self.list_box.delete(index)
+
 
 class Menu(DisplayElement):
     def __init__(self, entry_task: EntryTask, task_list: TasksList):
@@ -124,7 +130,7 @@ class Menu(DisplayElement):
         pass
 
     def delete_task(self):
-        pass
+        self.task_list.delete_selected_task()
 
 
 class Footer(DisplayElement):
