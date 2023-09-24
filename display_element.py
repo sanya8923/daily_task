@@ -9,6 +9,7 @@ from tkinter import (Label,
 from typing import Optional
 from db import MongoDb
 from db_manager import DbManager
+from base import Task
 
 NAME_APP = 'Daily Tasks'
 BUTTON_ADD = 'Add'
@@ -151,7 +152,9 @@ class Menu(DisplayElement):
 
     def add_task(self):
         task_text = self.entry_task.get_text()
-        print(self.db_manager.load_one({'task': task_text}))
+        task_model = Task(task=task_text)
+        serialized_data = task_model.serialize()
+        print(self.db_manager.load_one(serialized_data))
         self.task_list.add_task(task_text)
 
     def edit_task(self):
