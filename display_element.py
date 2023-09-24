@@ -5,13 +5,13 @@ from tkinter import (Label,
                      Button,
                      Frame,
                      Scrollbar,
-                     END,
-                     messagebox)
+                     END)
 from typing import Optional
 from db import MongoDb
 from db_manager import DbManager
 from base import Task
 
+# Constants representing various UI elements and configurations.
 NAME_APP = 'Daily Tasks'
 BUTTON_ADD = 'Add'
 BUTTON_EDIT = 'Edit'
@@ -21,13 +21,25 @@ ACTIVE_BACKGROUND_BUTTON = '#1f69a4'
 
 
 class DisplayElement(ABC):
+    """
+    Abstract base class representing a display element in the UI.
+    """
     @abstractmethod
     def add(self, frame):
+        """
+        Abstract method to add the display element to the given frame.
+        """
         pass
 
 
 class Header(DisplayElement):
+    """
+    Class representing the header of the application.
+    """
     def add(self, frame):
+        """
+        Adds the header to the given frame.
+        """
         label = Label(frame,
                       text=NAME_APP,
                       padx=300,
@@ -40,10 +52,16 @@ class Header(DisplayElement):
 
 
 class EntryTask(DisplayElement):
+    """
+    Class representing the task entry field in the application.
+    """
     def __init__(self):
         self.entry: Optional[Entry] = None
 
     def add(self, frame):
+        """
+        Adds the task entry field to the given frame.
+        """
         self.entry = Entry(frame)
         self.entry.grid(row=1,
                         column=0,
@@ -51,19 +69,33 @@ class EntryTask(DisplayElement):
                         padx=50)
 
     def get_text(self):
+        """
+        Retrieves the text entered in the task entry field.
+
+        :return: The text entered in the task entry field.
+        """
         return self.entry.get()
 
     def get_task(self):
+        """
+        Alias for the get_text method.
+        """
         return self.entry.get()
 
 
 class TasksList(DisplayElement):
+    """
+    Class representing the list of tasks in the application.
+    """
     def __init__(self):
         self.list_box = Optional[Listbox]
         self.db = MongoDb()
         self.db_manager = DbManager(self.db)
 
     def add(self, frame):
+        """
+        Adds the task list to the given frame.
+        """
         container = Frame(frame)
         container.grid(row=2,
                        column=0,
@@ -83,9 +115,19 @@ class TasksList(DisplayElement):
         scrollbar.config(command=self.list_box.yview)
 
     def add_task(self, task_text: str):
+        """
+        Adds a task to the task list.
+
+        :param task_text: The text of the task to be added.
+        """
         self.list_box.insert(END, task_text)
 
     def get_selected_task(self):
+        """
+        Retrieves the selected task from the task list.
+
+        :return: A tuple containing the text of the selected task and its index, or (None, None) if no task is selected.
+        """
         selected_index = self.list_box.curselection()
 
         if selected_index:
@@ -93,16 +135,28 @@ class TasksList(DisplayElement):
         return None, None
 
     def update_task(self, index, new_task):
+        """
+        Updates the task at the given index with the new task text.
+
+        :param index: The index of the task to be updated.
+        :param new_task: The new task text.
+        """
         self.list_box.delete(index)
         self.list_box.insert(index, new_task)
 
     def delete_selected_task(self):
+        """
+        Deletes the selected task(s) from the task list.
+        """
         selected_indexes = self.list_box.curselection()
 
         for index in selected_indexes[::1]:
             self.list_box.delete(index)
 
     def load_tasks_from_db(self):
+        """
+        Loads tasks from the database and adds them to the task list.
+        """
         tasks = self.db_manager.get_many()
 
         if tasks:
@@ -112,6 +166,9 @@ class TasksList(DisplayElement):
 
 
 class Menu(DisplayElement):
+    """
+    Class representing the menu of the application.
+    """
     def __init__(self, entry_task: EntryTask, task_list: TasksList):
         self.entry_task: EntryTask = entry_task
         self.task_list: TasksList = task_list
@@ -119,6 +176,9 @@ class Menu(DisplayElement):
         self.db_manager = DbManager(self.db)
 
     def add(self, frame):
+        """
+        Adds the menu buttons to the given frame.
+        """
         button_add = Button(frame,
                             text=BUTTON_ADD,
                             background=BACKGROUND,
@@ -150,6 +210,9 @@ class Menu(DisplayElement):
                            padx=50)
 
     def add_task(self):
+        """
+        Adds a new task to the task list and the database.
+        """
         task_text = self.entry_task.get_text()
 
         task_model = Task(task=task_text)
@@ -159,6 +222,9 @@ class Menu(DisplayElement):
         self.task_list.add_task(task_text)
 
     def edit_task(self):
+        """
+        Edits the selected task in the task list and the database.
+        """
         task, index = self.task_list.get_selected_task()
 
         if task is not None:
@@ -176,6 +242,9 @@ class Menu(DisplayElement):
             self.task_list.update_task(index, new_task)
 
     def delete_task(self):
+        """
+        Deletes the selected task from the task list and the database.
+        """
         task, index = self.task_list.get_selected_task()
 
         if task is not None:
@@ -187,9 +256,14 @@ class Menu(DisplayElement):
 
 
 class Footer(DisplayElement):
+    """
+    Class representing the footer of the application.
+    """
     def add(self, frame):
-        label = Label(frame,
-                      pady=20,
+        """
+        Adds the footer to the given frame.
+        """
+        label = Label(frame,                      pady=20,
                       background=BACKGROUND)
         label.grid(row=6,
                    column=0,
