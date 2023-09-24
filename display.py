@@ -1,6 +1,13 @@
-from tkinter import Tk, Frame
-from display_element import DisplayElement, Header, EntryTask, TasksList, Menu, Footer
-from abc import ABC, abstractmethod
+from tkinter import (Tk,
+                     Frame)
+from display_element import (DisplayElement,
+                             Header,
+                             EntryTask,
+                             TasksList,
+                             Menu,
+                             Footer)
+from abc import (ABC,
+                 abstractmethod)
 
 NAME_APP = 'Daily Tasks'
 BACKGROUND = '#242424'
@@ -25,17 +32,11 @@ class MainDisplay(Display):
         frame = Frame(self.app, background=BACKGROUND)
         frame.pack(expand=True)
 
-        header = Header()
-        entry_task = EntryTask()
-        task_list = TasksList()
-        menu = Menu()
-        footer = Footer()
-
-        self.add_element(header, frame)
-        self.add_element(entry_task, frame)
-        self.add_element(task_list, frame)
-        self.add_element(menu, frame)
-        self.add_element(footer, frame)
+        self.add_element(Header(), frame)
+        self.add_element(EntryTask(), frame)
+        self.add_element(TasksList(), frame)
+        self.add_element(Menu(), frame)
+        self.add_element(Footer(), frame)
 
         self.app.mainloop()
 

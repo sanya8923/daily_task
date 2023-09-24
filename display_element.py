@@ -5,7 +5,7 @@ from tkinter import (Label,
                      Button,
                      Frame,
                      Scrollbar)
-
+from typing import Optional
 
 NAME_APP = 'Daily Tasks'
 BUTTON_ADD = 'Add'
@@ -35,12 +35,21 @@ class Header(DisplayElement):
 
 
 class EntryTask(DisplayElement):
+    def __init__(self):
+        self.entry: Optional[Entry] = None
+
     def add(self, frame):
-        entry = Entry(frame)
-        entry.grid(row=1,
-                   column=0,
-                   sticky='nsew',
-                   padx=50)
+        self.entry = Entry(frame)
+        self.entry.grid(row=1,
+                        column=0,
+                        sticky='nsew',
+                        padx=50)
+
+    def get_text(self):
+        try:
+            return self.entry.get()
+        except Exception as e:
+            print(e)
 
 
 class TasksList(DisplayElement):
@@ -52,7 +61,8 @@ class TasksList(DisplayElement):
                        padx=50)
 
         scrollbar = Scrollbar(container)
-        list_box = Listbox(container, yscrollcommand=scrollbar.set)
+        list_box = Listbox(container,
+                           yscrollcommand=scrollbar.set)
 
         list_box.pack(side='left',
                       fill='both',
@@ -91,7 +101,8 @@ class Menu(DisplayElement):
         button_delete = Button(frame,
                                text=BUTTON_DELETE,
                                background=BACKGROUND,
-                               activebackground=ACTIVE_BACKGROUND_BUTTON, command=self.delete_task)
+                               activebackground=ACTIVE_BACKGROUND_BUTTON,
+                               command=self.delete_task)
         button_delete.grid(row=5,
                            column=0,
                            sticky='nsew',
@@ -116,4 +127,3 @@ class Footer(DisplayElement):
                    column=0,
                    sticky='nsew',
                    padx=20)
-
