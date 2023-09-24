@@ -39,6 +39,7 @@ class MainDisplay(Display):
         self.add_element(Header(), frame)
         self.add_element(entry_task, frame)
         self.add_element(task_list, frame)
+        task_list.load_tasks_from_db()
         self.add_element(menu, frame)
         self.add_element(Footer(), frame)
 

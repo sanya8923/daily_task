@@ -61,6 +61,8 @@ class EntryTask(DisplayElement):
 class TasksList(DisplayElement):
     def __init__(self):
         self.list_box = Optional[Listbox]
+        self.db = MongoDb()
+        self.db_manager = DbManager(self.db)
 
     def add(self, frame):
         container = Frame(frame)
@@ -100,6 +102,13 @@ class TasksList(DisplayElement):
 
         for index in selected_indexes[::1]:
             self.list_box.delete(index)
+
+    def load_tasks_from_db(self):
+        tasks = self.db_manager.get_many()
+
+        if tasks:
+            for task in tasks:
+                self.add_task(task['task'])
 
 
 class Menu(DisplayElement):
