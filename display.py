@@ -1,4 +1,5 @@
 from tkinter import Tk, Frame, Label, Button, Entry, Listbox, Scrollbar
+from display_element import DisplayElement, Header, EntryTask, TasksList, Menu, Footer
 from abc import ABC, abstractmethod
 
 NAME_APP = 'Daily Tasks'
@@ -12,7 +13,7 @@ class Display(ABC):
         self.app = Tk()
 
     @abstractmethod
-    def main_frame(self):
+    def make_display(self):
         pass
 
 
@@ -21,18 +22,26 @@ class MainDisplay(Display):
         super().__init__()
         self.name_app = NAME_APP
 
-    def main_frame(self):
+    def make_display(self):
         self.app.title(NAME_APP)
         frame = Frame(self.app, background='#242424')
         frame.pack(expand=True)
 
-        self.header(frame)
-        self.entry(frame)
-        self.tasks_list(frame)
-        self.menu(frame)
-        self.footer(frame)
+        header = Header()
+        entry_task = EntryTask()
+        menu = Menu()
+        footer = Footer()
+
+
+        # self.header(frame)
+        # self.entry(frame)
+        # self.tasks_list(frame)
+        # self.menu(frame)
+        # self.footer(frame)
 
         self.app.mainloop()
+
+    def add_
 
     def header(self, frame):
         label = Label(frame, text=self.name_app, padx=300, pady=50, font=('arial', 50), background='#242424')
