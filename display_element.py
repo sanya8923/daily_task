@@ -156,6 +156,9 @@ class Menu(DisplayElement):
             self.task_list.update_task(index, new_task)
 
     def delete_task(self):
+        selected_task = (self.task_list.get_selected_task())[0]
+        fltr = {'task': selected_task}
+        print(self.db_manager.delete_one(fltr))
         self.task_list.delete_selected_task()
 
 
