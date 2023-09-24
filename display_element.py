@@ -150,6 +150,9 @@ class Menu(DisplayElement):
 
         if task is not None:
             new_task = self.entry_task.get_task()
+            fltr = {'task': task}
+            update = {'$set': {'task': new_task}}
+            print(self.db_manager.update_one(fltr, update))
             self.task_list.update_task(index, new_task)
 
     def delete_task(self):
