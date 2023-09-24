@@ -48,23 +48,25 @@ class MainDisplay(Display):
         """
         Create and show the main display.
         """
+        self.app.title(NAME_APP)
+        frame = Frame(self.app, background=BACKGROUND)
+        frame.pack(expand=True)
+
+        entry_task = EntryTask()
+        task_list = TasksList()
+        menu = Menu(entry_task, task_list)
+
+        self.add_element(Header(), frame)
+        self.add_element(entry_task, frame)
+        self.add_element(task_list, frame)
+        task_list.load_tasks_from_db()
+        self.add_element(menu, frame)
+        self.add_element(Footer(), frame)
+
         try:
-            self.app.title(NAME_APP)
-            frame = Frame(self.app, background=BACKGROUND)
-            frame.pack(expand=True)
-
-            entry_task = EntryTask()
-            task_list = TasksList()
-            menu = Menu(entry_task, task_list)
-
-            self.add_element(Header(), frame)
-            self.add_element(entry_task, frame)
-            self.add_element(task_list, frame)
-            task_list.load_tasks_from_db()
-            self.add_element(menu, frame)
-            self.add_element(Footer(), frame)
 
             self.app.mainloop()
+
         except TclError as e:
             with open('log.txt', 'a') as log_file:
                 log_file.write(f"TclError: {e}\n")
@@ -85,7 +87,15 @@ class MainDisplay(Display):
         :return: The result of adding the display element.
         """
         try:
+
             return display_element.add(frame)
+
+        except TclError as e:
+            with open('log.txt', 'a') as log_file:
+                log_file.write(f"TclError: {e}\n")
+            messagebox.showerror('Error', 'A graphical error occurred. Please try again or contact support.')
+            self.app.quit()
+
         except Exception as e:
             with open('log.txt', 'a') as log_file:
                 log_file.write(f"Exception: {e}\n")
