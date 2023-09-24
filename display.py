@@ -32,14 +32,17 @@ class MainDisplay(Display):
         frame = Frame(self.app, background=BACKGROUND)
         frame.pack(expand=True)
 
+        entry_task = EntryTask()
+        task_list = TasksList()
+        menu = Menu(entry_task, task_list)
+
         self.add_element(Header(), frame)
-        self.add_element(EntryTask(), frame)
-        self.add_element(TasksList(), frame)
-        self.add_element(Menu(), frame)
+        self.add_element(entry_task, frame)
+        self.add_element(task_list, frame)
+        self.add_element(menu, frame)
         self.add_element(Footer(), frame)
 
         self.app.mainloop()
 
     def add_element(self, display_element: DisplayElement, frame: Frame):
         return display_element.add(frame)
-
