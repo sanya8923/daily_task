@@ -45,7 +45,14 @@ class TasksList(DisplayElement):
 
 class Menu(DisplayElement):
     def add_element(self, frame):
-        pass
+        button_add = Button(frame, text=BUTTON_ADD, bg='#242424', activebackground='#1f69a4')
+        button_add.grid(row=3, column=0, sticky='nsew', padx=50)
+
+        button_edit = Button(frame, text=BUTTON_EDIT, bg='#242424', activebackground='#1f69a4')
+        button_edit.grid(row=4, column=0, sticky='nsew', padx=50)
+
+        button_delete = Button(frame, text=BUTTON_DELETE, bg='#242424', activebackground='#1f69a4')
+        button_delete.grid(row=5, column=0, sticky='nsew', padx=50)
 
     def add_task(self):
         pass
