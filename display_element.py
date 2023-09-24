@@ -7,6 +7,8 @@ from tkinter import (Label,
                      Scrollbar,
                      END)
 from typing import Optional
+from db import MongoDb
+from db_manager import DbManager
 
 NAME_APP = 'Daily Tasks'
 BUTTON_ADD = 'Add'
@@ -104,6 +106,8 @@ class Menu(DisplayElement):
     def __init__(self, entry_task: EntryTask, task_list: TasksList):
         self.entry_task: EntryTask = entry_task
         self.task_list: TasksList = task_list
+        self.db = MongoDb()
+        self.db_manager = DbManager(self.db)
 
     def add(self, frame):
         button_add = Button(frame,
@@ -138,6 +142,7 @@ class Menu(DisplayElement):
 
     def add_task(self):
         task_text = self.entry_task.get_text()
+        print(self.db_manager.load_one({'task': task_text}))
         self.task_list.add_task(task_text)
 
     def edit_task(self):
