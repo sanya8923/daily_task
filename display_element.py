@@ -66,5 +66,6 @@ class Menu(DisplayElement):
 
 class Footer(DisplayElement):
     def add_element(self, frame):
-        pass
+        label = Label(frame, pady=20, background='#242424')
+        label.grid(row=6, column=0, sticky='nsew', padx=20)
 
