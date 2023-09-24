@@ -3,7 +3,7 @@ from display import MainDisplay
 
 def main():
     app = MainDisplay()
-    app.make_display()
+    app.make()
 
 
 if __name__ == '__main__':
