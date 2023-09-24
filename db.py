@@ -4,6 +4,7 @@ from pymongo import MongoClient
 from pymongo.results import InsertOneResult, UpdateResult, DeleteResult
 from typing import Any, List, Dict, Optional
 from logger import print, log_function
+from abc import ABC, abstractmethod
 
 
 load_dotenv()
@@ -11,11 +12,29 @@ var_name = os.getenv('MONGO')
 cluster = MongoClient(var_name)
 
 
-class Db:
+class Db(ABC):
     """
     Base class for database interaction.
     """
-    pass
+    @abstractmethod
+    def insert_one(self, data: dict, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def find_one(self, fltr: Dict[str, Any], *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def find_many(self, *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def update_one(self, fltr: Dict[str, Any], update: Dict[str, Any], *args, **kwargs):
+        pass
+
+    @abstractmethod
+    def delete_one(self, fltr: Dict[str, Any], *args, **kwargs):
+        pass
 
 
 class MongoDb(Db):
