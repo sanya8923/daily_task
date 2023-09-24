@@ -109,7 +109,8 @@ class TasksList(DisplayElement):
 
         if tasks:
             for task in tasks:
-                self.add_task(task['task'])
+                task_model = Task.deserialize(task)
+                self.add_task(task_model.task)
 
 
 class Menu(DisplayElement):
