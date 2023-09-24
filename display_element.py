@@ -10,24 +10,24 @@ BUTTON_DELETE = 'Delete'
 
 class DisplayElement(ABC):
     @abstractmethod
-    def add_element(self, frame):
+    def add(self, frame):
         pass
 
 
 class Header(DisplayElement):
-    def add_element(self, frame):
+    def add(self, frame):
         label = Label(frame, text=NAME_APP, padx=300, pady=50, font=('arial', 50), background='#242424')
         label.grid(row=0, column=0, sticky='nsew')
 
 
 class EntryTask(DisplayElement):
-    def add_element(self, frame):
+    def add(self, frame):
         entry = Entry(frame)
         entry.grid(row=1, column=0, sticky='nsew', padx=50)
 
 
 class TasksList(DisplayElement):
-    def add_element(self, frame):
+    def add(self, frame):
         container = Frame(frame)
         container.grid(row=2, column=0, sticky='nsew', padx=50)
 
@@ -44,7 +44,7 @@ class TasksList(DisplayElement):
 
 
 class Menu(DisplayElement):
-    def add_element(self, frame):
+    def add(self, frame):
         button_add = Button(frame, text=BUTTON_ADD, bg='#242424', activebackground='#1f69a4')
         button_add.grid(row=3, column=0, sticky='nsew', padx=50)
 
@@ -65,7 +65,7 @@ class Menu(DisplayElement):
 
 
 class Footer(DisplayElement):
-    def add_element(self, frame):
+    def add(self, frame):
         label = Label(frame, pady=20, background='#242424')
         label.grid(row=6, column=0, sticky='nsew', padx=20)
 
