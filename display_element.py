@@ -51,10 +51,7 @@ class EntryTask(DisplayElement):
                         padx=50)
 
     def get_text(self):
-        try:
-            return self.entry.get()
-        except Exception as e:
-            print(e)
+        return self.entry.get()
 
     def get_task(self):
         return self.entry.get()
