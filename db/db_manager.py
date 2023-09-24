@@ -1,4 +1,4 @@
-from db import Db
+from db.db import Db
 from pymongo.results import (InsertOneResult,
                              UpdateResult,
                              DeleteResult)

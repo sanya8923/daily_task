@@ -2,12 +2,12 @@ from tkinter import (Tk,
                      Frame,
                      TclError,
                      messagebox)
-from display_element import (DisplayElement,
-                             Header,
-                             EntryTask,
-                             TasksList,
-                             Menu,
-                             Footer)
+from display.display_element import (DisplayElement,
+                                     Header,
+                                     EntryTask,
+                                     TasksList,
+                                     Menu,
+                                     Footer)
 from abc import (ABC,
                  abstractmethod)
 
@@ -19,6 +19,7 @@ class Display(ABC):
     """
     Abstract base class representing a display.
     """
+
     def __init__(self):
         """
         Initialize a new Display instance.
@@ -37,6 +38,7 @@ class MainDisplay(Display):
     """
     Main display class representing the application window.
     """
+
     def __init__(self):
         """
         Initialize a new MainDisplay instance.

@@ -1,4 +1,4 @@
-from display import MainDisplay
+from display.display import MainDisplay
 
 
 def main():

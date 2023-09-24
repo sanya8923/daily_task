@@ -7,9 +7,9 @@ from tkinter import (Label,
                      Scrollbar,
                      END)
 from typing import Optional
-from db import MongoDb
-from db_manager import DbManager
-from base import Task
+from db.db import MongoDb
+from db.db_manager import DbManager
+from model import Task
 
 # Constants representing various UI elements and configurations.
 NAME_APP = 'Daily Tasks'
