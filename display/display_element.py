@@ -68,13 +68,17 @@ class EntryTask(DisplayElement):
                         sticky='nsew',
                         padx=50)
 
-    def get_text(self):
+    def get_text(self) -> Optional[str]:
         """
         Retrieves the text entered in the task entry field.
 
-        :return: The text entered in the task entry field.
+        :return: The text entered in the task entry field or None.
         """
-        return self.entry.get()
+        text = self.entry.get()
+        if len(text) > 0:
+            return text
+        else:
+            return None
 
     def get_task(self):
         """
@@ -214,12 +218,12 @@ class Menu(DisplayElement):
         Adds a new task to the task list and the database.
         """
         task_text = self.entry_task.get_text()
+        if task_text:
+            task_model = Task(task=task_text)
+            serialized_data = task_model.serialize()
+            self.db_manager.load_one(serialized_data)
 
-        task_model = Task(task=task_text)
-        serialized_data = task_model.serialize()
-        self.db_manager.load_one(serialized_data)
-
-        self.task_list.add_task(task_text)
+            self.task_list.add_task(task_text)
 
     def edit_task(self):
         """
@@ -263,9 +267,13 @@ class Footer(DisplayElement):
         """
         Adds the footer to the given frame.
         """
-        label = Label(frame,                      pady=20,
+        label = Label(frame,
+                      pady=20,
                       background=BACKGROUND)
         label.grid(row=6,
                    column=0,
                    sticky='nsew',
                    padx=20)
+
+
+
