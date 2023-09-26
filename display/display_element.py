@@ -13,6 +13,7 @@ from model import Task
 
 # Constants representing various UI elements and configurations.
 NAME_APP = 'Daily Tasks'
+ENTRY_TEXT = 'Enter a task...'
 BUTTON_ADD = 'Add'
 BUTTON_EDIT = 'Edit'
 BUTTON_DELETE = 'Delete'
@@ -72,10 +73,22 @@ class EntryTask(DisplayElement):
                            highlightthickness=1,
                            background=BACKGROUND,
                            fg='white', insertbackground='white')
+        self.entry.insert(0, ENTRY_TEXT)
+        self.entry.bind('<FocusIn>', self.on_focus_in)
         self.entry.grid(row=1,
                         column=0,
                         sticky='nsew',
                         padx=50)
+
+    def on_focus_in(self, event):
+        """
+        When receiving focus, if the text in Entry is equal to the placeholder, clear the Entry.
+
+        :param event: Command from event.bind (Entry)
+        :return: None
+        """
+        if self.entry.get() == ENTRY_TEXT:
+            self.entry.delete(0, 'end')
 
     def get_text(self) -> Optional[str]:
         """
@@ -111,7 +124,7 @@ class TasksList(DisplayElement):
         """
         container = Frame(frame,
                           relief="ridge",
-                          background=BACKGROUND)  # TODO)
+                          background=BACKGROUND)
         container.grid(row=2,
                        column=0,
                        sticky='nsew',
@@ -119,10 +132,10 @@ class TasksList(DisplayElement):
 
         scrollbar = Scrollbar(container,
                               bg=BACKGROUND,
-                              border=1)  # TODO)
+                              border=1)
         self.list_box = Listbox(container,
                                 yscrollcommand=scrollbar.set,
-                                background='white')  # TODO
+                                background='white')
 
         self.list_box.pack(side='left',
                            fill='both',
