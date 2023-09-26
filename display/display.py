@@ -56,7 +56,7 @@ class MainDisplay(Display):
         frame.pack(expand=True)
 
         entry_task = EntryTask()
-        task_list = TasksList()
+        task_list = TasksList(entry_task)
         menu = Menu(entry_task, task_list)
 
         self.add_element(Header(), frame)

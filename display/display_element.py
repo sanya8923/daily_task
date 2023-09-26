@@ -19,7 +19,7 @@ BUTTON_EDIT = 'Edit'
 BUTTON_DELETE = 'Delete'
 BACKGROUND = '#242424'
 TEXT_COLOR = '#FFFFFF'
-ACTIVE_BACKGROUND_BUTTON = '#1f69a4'
+BACKGROUND_BUTTON = '#1f69a4'
 
 
 class DisplayElement(ABC):
@@ -74,20 +74,23 @@ class EntryTask(DisplayElement):
                            background=BACKGROUND,
                            fg='white', insertbackground='white')
         self.entry.insert(0, ENTRY_TEXT)
-        self.entry.bind('<FocusIn>', self.on_focus_in)
+        self.entry.bind('<FocusIn>', self.clear)
         self.entry.grid(row=1,
                         column=0,
                         sticky='nsew',
                         padx=50)
 
-    def on_focus_in(self, event):
+    def bind(self, *args, **kwargs):
+        return self.entry.bind(*args, **kwargs)
+
+    def clear(self, *args, **kwargs):
         """
         When receiving focus, if the text in Entry is equal to the placeholder, clear the Entry.
 
         :param event: Command from event.bind (Entry)
         :return: None
         """
-        if self.entry.get() == ENTRY_TEXT:
+        if len(self.entry.get()) > 0:
             self.entry.delete(0, 'end')
 
     def get_text(self) -> Optional[str]:
@@ -108,15 +111,22 @@ class EntryTask(DisplayElement):
         """
         return self.entry.get()
 
+    def insert(self, *args, **kwargs):
+        """
+        Alias for the insert method.
+        """
+        return self.entry.insert(*args, **kwargs)
+
 
 class TasksList(DisplayElement):
     """
     Class representing the list of tasks in the application.
     """
-    def __init__(self):
+    def __init__(self, entry_task):
         self.list_box = Optional[Listbox]
         self.db = MongoDb()
         self.db_manager = DbManager(self.db)
+        self.entry_task: EntryTask = entry_task
 
     def add(self, frame):
         """
@@ -136,6 +146,7 @@ class TasksList(DisplayElement):
         self.list_box = Listbox(container,
                                 yscrollcommand=scrollbar.set,
                                 background='white')
+        self.list_box.bind('<<ListboxSelect>>', self.on_select)
 
         self.list_box.pack(side='left',
                            fill='both',
@@ -195,6 +206,16 @@ class TasksList(DisplayElement):
                 task_model = Task.deserialize(task)
                 self.add_task(task_model.task)
 
+    def on_select(self, *args, **kwargs):
+        index = self.list_box.curselection()
+        print(f'index: {index}')
+
+        if index:
+            selected_text = self.list_box.get(index)
+            print(f'selected_text: {selected_text}')
+            self.entry_task.clear()
+            self.entry_task.insert(0, selected_text)
+
 
 class Menu(DisplayElement):
     """
@@ -210,10 +231,13 @@ class Menu(DisplayElement):
         """
         Adds the menu buttons to the given frame.
         """
+        self.entry_task.entry.bind('<Return>', self.add_task_wrapper)
+
         button_add = Button(frame,
                             text=BUTTON_ADD,
                             relief='raised',
-                            activebackground=ACTIVE_BACKGROUND_BUTTON,
+                            activebackground=BACKGROUND_BUTTON,
+                            highlightbackground=BACKGROUND,
                             command=self.add_task)
         button_add.grid(row=3,
                         column=0,
@@ -222,8 +246,9 @@ class Menu(DisplayElement):
 
         button_edit = Button(frame,
                              text=BUTTON_EDIT,
-                             background=BACKGROUND,
-                             activebackground=ACTIVE_BACKGROUND_BUTTON,
+                             relief='raised',
+                             activebackground=BACKGROUND_BUTTON,
+                             highlightbackground=BACKGROUND,
                              command=self.edit_task)
         button_edit.grid(row=4,
                          column=0,
@@ -232,13 +257,23 @@ class Menu(DisplayElement):
 
         button_delete = Button(frame,
                                text=BUTTON_DELETE,
-                               background=BACKGROUND,
-                               activebackground=ACTIVE_BACKGROUND_BUTTON,
+                               relief='raised',
+                               activebackground=BACKGROUND_BUTTON,
+                               highlightbackground=BACKGROUND,
                                command=self.delete_task)
         button_delete.grid(row=5,
                            column=0,
                            sticky='nsew',
                            padx=50)
+
+    def add_task_wrapper(self, event):
+        """
+        Pressing Enter calls the add_task
+
+        :param event: Command from event.bind (Entry)
+        :return: None
+                """
+        self.add_task()
 
     def add_task(self):
         """
@@ -251,6 +286,7 @@ class Menu(DisplayElement):
             self.db_manager.load_one(serialized_data)
 
             self.task_list.add_task(task_text)
+            self.entry_task.clear()
 
     def edit_task(self):
         """
