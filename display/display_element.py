@@ -66,7 +66,12 @@ class EntryTask(DisplayElement):
         Adds the task entry field to the given frame.
         """
         self.entry = Entry(frame,
-                           relief="ridge")
+                           relief="groove",
+                           highlightcolor='black',
+                           highlightbackground='black',
+                           highlightthickness=1,
+                           background=BACKGROUND,
+                           fg='white', insertbackground='white')
         self.entry.grid(row=1,
                         column=0,
                         sticky='nsew',
@@ -105,15 +110,19 @@ class TasksList(DisplayElement):
         Adds the task list to the given frame.
         """
         container = Frame(frame,
-                          relief="ridge")
+                          relief="ridge",
+                          background=BACKGROUND)  # TODO)
         container.grid(row=2,
                        column=0,
                        sticky='nsew',
                        padx=50)
 
-        scrollbar = Scrollbar(container)
+        scrollbar = Scrollbar(container,
+                              bg=BACKGROUND,
+                              border=1)  # TODO)
         self.list_box = Listbox(container,
-                                yscrollcommand=scrollbar.set)
+                                yscrollcommand=scrollbar.set,
+                                background='white')  # TODO
 
         self.list_box.pack(side='left',
                            fill='both',
@@ -190,7 +199,7 @@ class Menu(DisplayElement):
         """
         button_add = Button(frame,
                             text=BUTTON_ADD,
-                            background=BACKGROUND,
+                            relief='raised',
                             activebackground=ACTIVE_BACKGROUND_BUTTON,
                             command=self.add_task)
         button_add.grid(row=3,
