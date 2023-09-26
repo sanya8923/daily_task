@@ -51,6 +51,7 @@ class MainDisplay(Display):
         Create and show the main display.
         """
         self.app.title(NAME_APP)
+        self.app.config(background=BACKGROUND)
         frame = Frame(self.app, background=BACKGROUND)
         frame.pack(expand=True)
 

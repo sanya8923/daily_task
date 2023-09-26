@@ -17,6 +17,7 @@ BUTTON_ADD = 'Add'
 BUTTON_EDIT = 'Edit'
 BUTTON_DELETE = 'Delete'
 BACKGROUND = '#242424'
+TEXT_COLOR = '#FFFFFF'
 ACTIVE_BACKGROUND_BUTTON = '#1f69a4'
 
 
@@ -42,6 +43,8 @@ class Header(DisplayElement):
         """
         label = Label(frame,
                       text=NAME_APP,
+                      fg='white',
+                      relief="flat",
                       padx=300,
                       pady=50,
                       font=('arial', 50),
@@ -62,7 +65,8 @@ class EntryTask(DisplayElement):
         """
         Adds the task entry field to the given frame.
         """
-        self.entry = Entry(frame)
+        self.entry = Entry(frame,
+                           relief="ridge")
         self.entry.grid(row=1,
                         column=0,
                         sticky='nsew',
@@ -100,7 +104,8 @@ class TasksList(DisplayElement):
         """
         Adds the task list to the given frame.
         """
-        container = Frame(frame)
+        container = Frame(frame,
+                          relief="ridge")
         container.grid(row=2,
                        column=0,
                        sticky='nsew',
