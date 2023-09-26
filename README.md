@@ -1,7 +1,5 @@
 # Daily Tasks
 
-![Project Logo](link_to_logo)
-
 ## Overview
 
 Daily Tasks is a simple and user-friendly task management application built with Python and Tkinter. It allows users to easily add, edit, and delete tasks, providing a seamless experience for keeping track of daily activities.
